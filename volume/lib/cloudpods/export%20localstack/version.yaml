@@ -1,0 +1,20 @@
+comment: Initial version
+creator: unknown
+hash_ref: '0x8422a7a89212d04762e00cb5ce3b8198debbc1d8'
+incoming_revision_ptr: null
+obj_type: Version
+outgoing_revision_ptrs:
+- '0x9da23658e54de53106aa0aaf5292a5e8e6dec04d'
+parent_ptr: NIL
+revisions:
+- assoc_commit: null
+  creator: unknown
+  hash_ref: '0x9da23658e54de53106aa0aaf5292a5e8e6dec04d'
+  metamodel_file: ''
+  obj_type: Revision
+  parent_ptr: NIL
+  revision_number: 1
+  rid: cc73efcc
+  state_files: []
+state_files: []
+version_number: 2

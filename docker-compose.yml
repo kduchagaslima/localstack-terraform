@@ -1,0 +1,25 @@
+version: '3.8'
+
+networks:
+  monitor-net:
+    driver: bridge
+
+services:
+  localstack:
+    container_name: localstack
+    # image: localstack/localstack-pro  # required for Pro
+    image: localstack/localstack  # required for Pro
+    ports:
+      - "127.0.0.1:4566:4566"            # LocalStack Gateway
+      - "127.0.0.1:4510-4559:4510-4559"  # external services port range
+      # - "127.0.0.1:443:443"              # LocalStack HTTPS Gateway (Pro)      
+    environment:
+      - DEBUG=0
+      # - ACTIVATE_PRO=0
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - LOCALSTACK_AUTH_TOKEN=${LOCALSTACK_AUTH_TOKEN:?}  # required for Pro
+    volumes:
+      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - monitor-net
