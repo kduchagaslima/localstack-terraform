@@ -9,7 +9,7 @@
 
 
 ```bash
-clone this repo
+git clone https://github.com/kduchagaslima/localstack-terraform.git
 cd localstack-terraform
 docker compose up
 ```
