@@ -1,5 +1,8 @@
 # LocalStack Terraform IAC
 
+## Whats is LocalStack ?
+[LocalStack Docs](https://docs.localstack.cloud/overview/)
+
 ## Requirements
 
 - Docker with compose
