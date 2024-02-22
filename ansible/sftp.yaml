@@ -1,0 +1,37 @@
+---
+- name: Set up SFTP server on Ubuntu
+  hosts: localhost
+  tasks:
+    - name: Update repositories cache
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Install a list of packages
+      ansible.builtin.apt:
+        pkg:
+        - git
+        - ssh
+        - vim
+
+    - name: Configuring SFTP server
+      ansible.builtin.blockinfile:
+        path: /etc/ssh/sshd_config
+        block: "{{ lookup('ansible.builtin.file', './sshd_config_additional') }}"
+        backup: yes       
+
+    - name: Restart service ssh
+      ansible.builtin.shell:
+        cmd: service ssh restart
+
+    - name: Ensure group "sftp" exists
+      ansible.builtin.group:
+        name: sftp
+        state: present        
+
+    - name: Add the user 'sftp_user' to sftp user
+      ansible.builtin.user:
+        name: sftp_user
+        password: "{{ 'sftp_passwd' | password_hash('sha512', 'sftp_passwd') }}"
+        comment: Lambda SFTP
+        uid: 1040
+        group: sftp

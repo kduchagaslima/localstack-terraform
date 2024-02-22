@@ -15,11 +15,25 @@ services:
       # - "127.0.0.1:443:443"              # LocalStack HTTPS Gateway (Pro)      
     environment:
       - DEBUG=0
-      # - ACTIVATE_PRO=0
+      - ACTIVATE_PRO=0
       - DOCKER_HOST=unix:///var/run/docker.sock
-      - LOCALSTACK_AUTH_TOKEN=${LOCALSTACK_AUTH_TOKEN:?}  # required for Pro
+      # - LOCALSTACK_AUTH_TOKEN=${LOCALSTACK_AUTH_TOKEN:?}  # required for Pro
     volumes:
       - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - monitor-net
+
+  sftp-server:
+    container_name: sftp-server
+    image: ubuntu:jammy
+    ports:
+      - 2222:22
+    volumes:
+      - ./ansible:/opt/aplicacoes/ansible
+      - ./scripts:/opt/aplicacoes/scripts
+    environment:
+      - TZ=America/Sao_Paulo
+    entrypoint: bash /opt/aplicacoes/scripts/ubuntu-server.sh
     networks:
       - monitor-net
