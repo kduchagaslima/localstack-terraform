@@ -12,6 +12,8 @@
         - git
         - ssh
         - vim
+        - net-tools
+        - tcpdump
 
     - name: Configuring SFTP server
       ansible.builtin.blockinfile:
@@ -35,3 +37,4 @@
         comment: Lambda SFTP
         uid: 1040
         group: sftp
+        home: /home/sftp_user

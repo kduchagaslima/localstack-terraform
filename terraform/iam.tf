@@ -32,3 +32,21 @@ resource "aws_iam_role" "lambda_role" {
     ]
   })
 }
+
+resource "aws_iam_user" "test" {
+  name = "test"
+  path = "/test/"
+}
+
+resource "aws_iam_access_key" "test" {
+  user = aws_iam_user.test.name
+}
+
+output "AWS_ACCESS_KEY_ID" {
+  value = aws_iam_user.test.unique_id
+}
+
+output "AWS_SECRET_ACCESS_KEY" {
+  value = aws_iam_access_key.test.secret
+  sensitive = true
+}
