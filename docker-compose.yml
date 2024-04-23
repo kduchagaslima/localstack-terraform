@@ -29,8 +29,8 @@ services:
     ports:
       - 2222:22
     volumes:
-      - ./ansible:/opt/aplicacoes/ansible
-      - ./scripts:/opt/aplicacoes/scripts
+      - ansible:/opt/aplicacoes/ansible
+      - scripts:/opt/aplicacoes/scripts
     environment:
       - TZ=America/Sao_Paulo
     entrypoint: bash /opt/aplicacoes/scripts/ubuntu-server.sh
