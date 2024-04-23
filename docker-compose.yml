@@ -7,14 +7,15 @@ networks:
 services:
   localstack:
     container_name: localstack
-    # image: localstack/localstack-pro  # required for Pro
-    # image: localstack/localstack  # required for Pro
-    image: localstack/localstack:3.1
+    image: localstack/localstack-pro  # required for Pro
+    # image: localstack/localstack  # Community version
+    # image: localstack/localstack:3.1
 
     ports:
       - "127.0.0.1:4566:4566"            # LocalStack Gateway
       - "127.0.0.1:4510-4559:4510-4559"  # external services port range
       # - "127.0.0.1:443:443"              # LocalStack HTTPS Gateway (Pro)      
+      - "127.0.0.1:53:53"              # LocalStack DNS services      
     environment:
       - DEBUG=0
       - ACTIVATE_PRO=0

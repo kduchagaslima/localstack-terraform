@@ -1,4 +1,3 @@
-
 data "archive_file" "python_lambda_package" {  
   type = "zip"  
   # source_file = "${path.module}/code/lambda_function.py" 
@@ -15,7 +14,7 @@ resource "aws_lambda_function" "move_files_lambda" {
   role          = aws_iam_role.lambda_role.arn
   handler       = "index.handler"
   runtime = "nodejs18.x"
-  timeout = 50
+  timeout = 300
   tags = {
     Environment = "dev"
     Management = "Terraform"
@@ -23,10 +22,13 @@ resource "aws_lambda_function" "move_files_lambda" {
 
   environment {
     variables = {
-      destination_bucket = "sample-s3"
-      AWS_ACCESS_KEY_ID = aws_iam_user.test.unique_id
-      AWS_SECRET_ACCESS_KEY = aws_iam_access_key.test.secret
-      LAMBDA_RUNTIME_ENVIRONMENT_TIMEOUT = 60
+      # destination_bucket = "sample-s3"
+      TZ = "America/Sao_Paulo"
+      sftp_user_passwd = aws_ssm_parameter.sftp_key.value
+      LAMBDA_RUNTIME_ENVIRONMENT_TIMEOUT = 300
+      roleArn = aws_iam_role.lambda_role.arn
+      AWS_ACCESS_KEY_ID = aws_iam_user.localstack.unique_id
+      AWS_SECRET_ACCESS_KEY = aws_iam_access_key.localstack.secret
     }
   }
 }
