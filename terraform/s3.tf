@@ -16,3 +16,11 @@ resource "aws_s3_bucket" "source_s3" {
     Environment = "Dev"
   }
 }
+resource "aws_s3_bucket" "FirehoseFallbackS3Bucket" {
+  bucket = "firehosefallbacks3bucket"
+
+  tags = {
+    Name        = "firehosefallbacks3bucket"
+    Environment = "Dev"
+  }
+}

@@ -1,6 +1,13 @@
+volume
 # Local .terraform directories
+terraform/.terraform
+terraform/*.tfplan
+terraform/vars*
 **/.terraform/*
 terraform/code/node/node_modules
+terraform/code/pkg/*
+terraform/test/*
+terraform/code/test/*
 # .tfstate files
 *.tfstate
 *.tfstate.*

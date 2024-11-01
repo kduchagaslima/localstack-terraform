@@ -9,7 +9,7 @@ resource "aws_lambda_function" "move_files_lambda" {
   # If the file is not in the current working directory you will need to include a
   # path.module in the filename.
   filename      = "${path.module}/code/pkg/package_node.zip"
-  source_code_hash = data.archive_file.python_lambda_package.output_base64sha256
+  # source_code_hash = data.archive_file.python_lambda_package.output_base64sha256
   function_name = "move_files_lambda"
   role          = aws_iam_role.lambda_role.arn
   handler       = "index.handler"

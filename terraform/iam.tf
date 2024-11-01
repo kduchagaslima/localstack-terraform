@@ -50,3 +50,39 @@ output "AWS_SECRET_ACCESS_KEY" {
   value = aws_iam_access_key.localstack.secret
   sensitive = true
 }
+
+resource "aws_iam_role" "firehose_role" {
+  name = "GrafanaAWSLogsRoleFirehose"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Sid    = ""
+        Principal = {
+          Service = "firehose.amazonaws.com"
+        }
+      },
+    ]
+  })
+}
+
+resource "aws_iam_role_policy" "firehose_policy" {
+  name = "S3AndLogs"
+  role = aws_iam_role.firehose_role.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "*",
+        ]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
+}
+
