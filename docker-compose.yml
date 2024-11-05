@@ -23,18 +23,18 @@ services:
     networks:
       - localstack-net
 
-  # terraform:
-  #   container_name: terraform
-  #   image: hashicorp/terraform
-  #   volumes:
-  #     - ./terraform:/tf-files
-  #     - ./scripts/tf-provisioner.sh:/opt/scripts/tf-provisioner.sh
-  #   entrypoint: sh /opt/scripts/tf-provisioner.sh
-  #   depends_on:
-  #     localstack:
-  #       condition: service_started
-  #   networks:
-  #     - localstack-net    
+  terraform:
+    container_name: terraform
+    image: hashicorp/terraform
+    volumes:
+      - ./terraform:/tf-files
+      - ./scripts/tf-provisioner.sh:/opt/scripts/tf-provisioner.sh
+    entrypoint: sh /opt/scripts/tf-provisioner.sh
+    depends_on:
+      localstack:
+        condition: service_started
+    networks:
+      - localstack-net    
 
   sftp-server:
     container_name: sftp-server
