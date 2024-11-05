@@ -1,8 +1,19 @@
 const AWS = require('aws-sdk');
+
+const ACCESS_KEY_ID = process.env['AWS_ACCESS_KEY_ID'];
+const SECRET_ACCESS_KEY = process.env['AWS_SECRET_ACCESS_KEY'];
+// Configure AWS SDK for LocalStack
+AWS.config.update({
+  endpoint: 'http://localstack:4566',
+  region: 'us-east-1',
+  accessKeyId: ACCESS_KEY_ID,
+  secretAccessKey: SECRET_ACCESS_KEY,
+  s3ForcePathStyle: true
+});
+
 const S3 = new AWS.S3();
 const SFTP = require('ssh2-sftp-client');
 const sftp_user_passwd = process.env['sftp_user_passwd'];
-
 
 exports.handler = async (event) => {
     const bucketName = event.Records[0].s3.bucket.name;

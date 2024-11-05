@@ -23,29 +23,29 @@ services:
     networks:
       - localstack-net
 
-  terraform:
-    container_name: terraform
-    image: hashicorp/terraform
-    volumes:
-      - ./terraform:/tf-files
-      - ./scripts/tf-provisioner.sh:/opt/scripts/tf-provisioner.sh
-    entrypoint: sh /opt/scripts/tf-provisioner.sh
-    depends_on:
-      localstack:
-        condition: service_started
-    networks:
-      - localstack-net    
-
-  # sftp-server:
-  #   container_name: sftp-server
-  #   image: ubuntu:jammy
-  #   ports:
-  #     - 2222:22
+  # terraform:
+  #   container_name: terraform
+  #   image: hashicorp/terraform
   #   volumes:
-  #     - $PWD/ansible:/opt/aplicacoes/ansible
-  #     - $PWD/scripts:/opt/aplicacoes/scripts
-  #   environment:
-  #     - TZ=America/Sao_Paulo
-  #   entrypoint: bash /opt/aplicacoes/scripts/ubuntu-server.sh
+  #     - ./terraform:/tf-files
+  #     - ./scripts/tf-provisioner.sh:/opt/scripts/tf-provisioner.sh
+  #   entrypoint: sh /opt/scripts/tf-provisioner.sh
+  #   depends_on:
+  #     localstack:
+  #       condition: service_started
   #   networks:
-  #     - localstack-net
+  #     - localstack-net    
+
+  sftp-server:
+    container_name: sftp-server
+    image: ubuntu:jammy
+    ports:
+      - 2222:22
+    volumes:
+      - $PWD/ansible:/opt/aplicacoes/ansible
+      - $PWD/scripts:/opt/aplicacoes/scripts
+    environment:
+      - TZ=America/Sao_Paulo
+    entrypoint: bash /opt/aplicacoes/scripts/ubuntu-server.sh
+    networks:
+      - localstack-net
